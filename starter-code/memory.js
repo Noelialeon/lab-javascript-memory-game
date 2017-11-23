@@ -57,18 +57,28 @@ MemoryGame.prototype.selectCard = function(card){
       return;
     } else {
       console.log("Wrong guess");
-      $('.back',memoryGame.selectedCards[0]).toggle();
-      $('.back .blocked',memoryGame.selectedCards[0]).removeClass('back blocked').addClass('front');
-      $('.back',card).toggle();
-      $('.back .blocked',card).removeClass('back blocked').addClass('front');
+  $('.card .back').addClass('blocked');
+      showSecondCard(card,memoryGame.selectedCards[0]);
       memoryGame.selectedCards.length = 0;
-      return;
 
+      return;
     }
   } else {
     memoryGame.selectedCards.push(card);
   }
 };
+
+//////////////////////////////// Mostrar segunda carta
+function showSecondCard(card0,card1) {
+setTimeout(function(){
+
+  $('.back',card1).toggle();
+  $('.back .blocked',card1).removeClass('back blocked').addClass('front');
+  $('.back',card0).toggle();
+  $('.back .blocked',card0).removeClass('back blocked').addClass('front');
+  $('.card .back').removeClass('blocked');
+}, 500);
+}
 ////////////////////////////// Reset function
 MemoryGame.prototype.finished = function() {
   alert('Congratulations, you win!');
@@ -110,7 +120,6 @@ $(document).ready(function(){
     $('#pairs_clicked').html(memoryGame.pairsClicked);
     $('#pairs_guessed').html(memoryGame.correctPairs);
     if(memoryGame.correctPairs === 12){
-
       MemoryGame.prototype.finished();
     }
   }
